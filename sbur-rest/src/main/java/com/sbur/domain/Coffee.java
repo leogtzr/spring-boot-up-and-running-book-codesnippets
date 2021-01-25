@@ -1,10 +1,12 @@
 package com.sbur.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.UUID;
 
 @Data
+@EqualsAndHashCode
 public class Coffee {
 
     private final String id;
@@ -18,4 +20,5 @@ public class Coffee {
     public Coffee(final String name) {
         this(UUID.randomUUID().toString(), name);
     }
+
 }
