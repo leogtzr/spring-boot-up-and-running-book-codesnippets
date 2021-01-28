@@ -1,6 +1,8 @@
 package com.sbur.controller;
 
 import com.sbur.domain.Coffee;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -8,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/coffees")
 public class RestApiDemoController {
 
     private List<Coffee> coffees = new ArrayList<>();
@@ -23,24 +25,24 @@ public class RestApiDemoController {
     }
 
     //@RequestMapping(value = "/coffees", method = RequestMethod.GET)
-    @GetMapping("/coffees")
+    @GetMapping
     public Iterable<Coffee> getCoffees() {
         return this.coffees;
     }
 
-    @GetMapping("/coffees/{id}")
+    @GetMapping("/{id}")
     public Optional<Coffee> getCoffeeById(@PathVariable  final String id) {
         return this.coffees.stream().filter(coffee -> coffee.getId().equals(id)).findFirst();
     }
 
-    @PostMapping("/coffees")
-    public Coffee createCoffee(final Coffee coffee) {
+    @PostMapping
+    public Coffee createCoffee(@RequestBody final Coffee coffee) {
         this.coffees.add(coffee);
         return coffee;
     }
 
-    @PutMapping("/coffees/{id}")
-    public Coffee updateCoffee(@PathVariable final String id, @RequestBody final Coffee coffee) {
+    @PutMapping("/{id}")
+    public ResponseEntity<Coffee> updateCoffee(@PathVariable final String id, @RequestBody final Coffee coffee) {
         int index = -1;
         for (final Coffee cf : this.coffees) {
             if (cf.getId().equals(id)) {
@@ -49,10 +51,15 @@ public class RestApiDemoController {
             }
         }
 
-        return index == -1 ? this.createCoffee(coffee) : coffee;
+//        return index == -1 ?
+//                ResponseEntity.status(HttpStatus.CREATED).body(coffee) : ResponseEntity.ok(coffee)
+//                ;
+        return (index == -1) ?
+                new ResponseEntity<>(createCoffee(coffee), HttpStatus.CREATED) :
+                new ResponseEntity<>(coffee, HttpStatus.OK);
     }
 
-    @DeleteMapping("/coffees/{id}")
+    @DeleteMapping("/{id}")
     public void deleteCoffee(@PathVariable final String id) {
         this.coffees.removeIf(cf -> cf.getId().equals(id));
     }

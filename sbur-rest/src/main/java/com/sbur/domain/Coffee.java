@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 import java.util.UUID;
 
 @Data
-@EqualsAndHashCode
+// @EqualsAndHashCode
 public class Coffee {
 
     private final String id;
@@ -19,6 +19,10 @@ public class Coffee {
 
     public Coffee(final String name) {
         this(UUID.randomUUID().toString(), name);
+    }
+
+    public Coffee() {
+        this(UUID.randomUUID().toString(), "");
     }
 
 }
