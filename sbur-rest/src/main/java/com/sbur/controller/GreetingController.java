@@ -13,9 +13,17 @@ public class GreetingController {
     @Value("${greeting-name: Sara}")
     private String name;
 
+    @Value("${greeting-coffee: ${greeting-name} is drinking Café Ganador}")
+    private String coffee;
+
     @GetMapping
     public String getGreeting() {
         return name;
+    }
+
+    @GetMapping("/coffee")
+    public String getNameAndCoffee() {
+        return this.coffee;
     }
 
 }
