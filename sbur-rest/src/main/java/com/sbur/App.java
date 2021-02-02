@@ -2,12 +2,14 @@ package com.sbur;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 @SpringBootApplication
-public class SburRestApplication {
+@ConfigurationPropertiesScan
+public class App {
 
 	public static void main(final String[] args) {
-		SpringApplication.run(SburRestApplication.class, args);
+		SpringApplication.run(App.class, args);
 	}
 
 }
