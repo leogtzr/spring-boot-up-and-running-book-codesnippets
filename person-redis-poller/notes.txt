@@ -1,0 +1,8 @@
+http POST :8081/persons age=23 name="Leonidas"
+http :8081/persons
+
+redis-cli
+    -> keys *
+    get "Leonidas"
+
+
