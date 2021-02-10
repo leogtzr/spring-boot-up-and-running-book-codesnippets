@@ -1,9 +1,11 @@
-package com.person.redis.schedule;
+package com.person.service.schedule;
 
-import com.person.redis.domain.Person;
+import com.person.service.domain.Person;
+import com.person.service.repository.PersonRepository;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -11,23 +13,18 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @EnableScheduling
 @Component
+@RequiredArgsConstructor
 @Slf4j
 public class PersonPoller {
 
-    private final RedisConnectionFactory connectionFactory;
+    @NonNull
+    private final PersonRepository repository;
+
     private final WebClient client = WebClient.create("http://localhost:8081/persons");
 
-    @Autowired
-    private PersonRepository repository;
-
-    public PersonPoller(RedisConnectionFactory connectionFactory, PersonRepository repository) {
-        this.connectionFactory = connectionFactory;
-        this.repository = repository;
-    }
-
-    @Scheduled(fixedDelay = 1000)
+    @Scheduled(fixedRate = 1000)
     public void pollPersons() {
-        this.connectionFactory.getConnection().serverCommands().flushDb();
+        this.repository.deleteAll();
 
         this.client.get()
                 .retrieve()
