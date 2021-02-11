@@ -5,7 +5,6 @@ import com.person.service.repository.PersonRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -24,7 +23,8 @@ public class PersonPoller {
 
     @Scheduled(fixedRate = 1000)
     public void pollPersons() {
-        this.repository.deleteAll();
+        // Commented out to avoid remove the records from data-${PLATFORM}.sql
+        // this.repository.deleteAll();
 
         this.client.get()
                 .retrieve()
