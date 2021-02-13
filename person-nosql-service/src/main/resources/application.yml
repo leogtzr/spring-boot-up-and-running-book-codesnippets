@@ -1,0 +1,26 @@
+#spring.data.mongodb.database=pendejada
+#spring.data.mongodb.username=leo
+#spring.data.mongodb.password=lein23
+#spring.data.mongodb.uri=mongodb://leo:lein23@127.0.0.1:27017/pendejada?authSource=admin
+#
+##spring.data.mongodb.uri=mongodb://develop:pass@localhost:27017/SHAM_TEST
+##spring.data.mongodb.host=localhost
+##spring.data.mongodb.port=27017
+##database: SHAM_TEST
+##username: develop
+##password: pass
+
+spring:
+  data:
+    mongodb:
+#      host: localhost
+      uri: mongodb://leo:lein23@127.0.0.1:27017/pendejada?authSource=admin
+#      username: leo
+#      password: lein23
+#      port: 27017
+#      database: pendejada
+#      repositories:
+#        enabled: true
+#      authentication-database: admin
+
+# spring.data.mongodb.uri
