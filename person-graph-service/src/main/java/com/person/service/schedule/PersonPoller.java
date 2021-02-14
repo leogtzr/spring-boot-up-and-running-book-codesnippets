@@ -27,7 +27,7 @@ public class PersonPoller {
         log.info("Running ... ");
 
         // Commented out to avoid remove the records from data-${PLATFORM}.sql
-        // this.repository.deleteAll();
+        this.repository.deleteAll();
 
         this.client.get()
                 .retrieve()
