@@ -1,6 +1,9 @@
 package com.person.configuration;
 
+import com.person.domain.Person;
+import com.person.repository.PersonRepository;
 import io.r2dbc.spi.ConnectionFactory;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -16,6 +19,21 @@ public class DBConfig {
         initializer.setConnectionFactory(connectionFactory);
         initializer.setDatabasePopulator(new ResourceDatabasePopulator(new ClassPathResource("schema.sql")));
         return initializer;
+    }
+
+    @Bean
+    public CommandLineRunner init(final PersonRepository personRepository) {
+        return args -> {
+            final Person person = new Person();
+            person.setAge(30);
+            person.setName("Leo");
+
+            personRepository
+                    .save(person)
+                    .thenMany(personRepository.findAll())
+                    .subscribe(System.out::println)
+                    ;
+        };
     }
 
 }
