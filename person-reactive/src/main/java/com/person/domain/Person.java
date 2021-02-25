@@ -4,17 +4,15 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.springframework.data.annotation.Id;
 
-// @Entity
 @Data
 @ToString
 @EqualsAndHashCode
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Person {
-//    @Id
-//    @GeneratedValue
+    @Id
     private Long id;
-
     private int age;
     private String name;
 }

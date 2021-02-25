@@ -1,4 +1,6 @@
 package com.person.repository;
 
-public class PersonRepository {
-}
+import com.person.domain.Person;
+import org.springframework.data.repository.reactive.ReactiveCrudRepository;
+
+public interface PersonRepository extends ReactiveCrudRepository<Person, Long> { }
