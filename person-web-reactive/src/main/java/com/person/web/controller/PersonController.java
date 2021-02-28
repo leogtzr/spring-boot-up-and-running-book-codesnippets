@@ -4,6 +4,7 @@ import com.person.web.domain.Person;
 import com.person.web.repository.PersonRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,7 @@ import reactor.core.publisher.Flux;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class PersonController {
 
     @NonNull
@@ -21,14 +23,16 @@ public class PersonController {
 
     @GetMapping("/person")
     public String getPersons(final Model model) {
-        final Flux<Person> aircraftFlux = this.personRepository.deleteAll()
+        log.info("A ver ... ");
+
+        final Flux<Person> persons = this.personRepository.deleteAll()
                 .thenMany(client.get()
                         .retrieve()
                         .bodyToFlux(Person.class)
                         .flatMap(this.personRepository::save));
+                ;
 
-        final Flux<Person> all = this.personRepository.findAll();
-        model.addAttribute("persons", all);
+        model.addAttribute("persons", persons);
 
         return "persons";
     }
