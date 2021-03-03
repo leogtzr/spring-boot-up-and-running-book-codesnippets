@@ -1,16 +1,21 @@
 package com.person.web.controller.rest;
 
+import com.person.web.repository.PersonRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@WebFluxTest(controllers = PersonAPIController.class)
 class PersonAPIControllerTest {
+
+    @MockBean
+    private PersonRepository personRepository;
 
     @BeforeEach
     void setUp() {
@@ -26,11 +31,6 @@ class PersonAPIControllerTest {
                 .exchange()
                 .expectStatus()
                 .isOk()
-                .expectBody(Iterable.class)
-        .returnResult()
-        .getResponseBody()
-        .iterator()
-        .hasNext()
         ;
     }
 }
