@@ -21,4 +21,9 @@ public class PersonAPIController {
         return this.personRepository.findAll();
     }
 
+    @GetMapping("personsadmin")
+    public Iterable<Person> personsAdmin() {
+        return this.personRepository.findAll();
+    }
+
 }
