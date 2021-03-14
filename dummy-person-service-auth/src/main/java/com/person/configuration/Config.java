@@ -12,7 +12,7 @@ public class Config {
         http
                 .authorizeExchange()
                 .pathMatchers("/persons/**").hasAuthority("SCOPE_closedid")
-                // .pathMatchers("/persons**").hasAuthority("SCOPE_openid")
+                 .pathMatchers("/persons/**").hasAuthority("SCOPE_openid")
                 .and().oauth2ResourceServer().jwt();
 
         return http.build();
