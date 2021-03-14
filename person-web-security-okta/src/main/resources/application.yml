@@ -8,4 +8,8 @@ spring:
             client-secret: ${OKTA_SECRET}
         provider:
           okta:
-            issuer-uri: https://${OKTA_DOMAIN}.oktapreview.com/oauth2/default
+            issuer-uri: https://${OKTA_DOMAIN}/oauth2/default
+
+okta:
+  oauth2:
+    issuer: https://dev-62765639.okta.com/oauth2/default
