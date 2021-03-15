@@ -1,7 +1,7 @@
 package com.person.web.controller;
 
 import com.person.web.domain.Person;
-import com.person.web.repository.PersonRepository;
+import com.person.web.service.PersonService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -18,11 +18,11 @@ import org.springframework.messaging.rsocket.RSocketRequester;
 @Slf4j
 public class PersonController {
 
-    private final PersonRepository personRepository;
+    private final PersonService personService;
     private final RSocketRequester requester;
 
-    public PersonController(final PersonRepository personRepository, final RSocketRequester requester) {
-        this.personRepository = personRepository;
+    public PersonController(final PersonService personService, final RSocketRequester requester) {
+        this.personService = personService;
         this.requester = requester;
     }
 
@@ -30,14 +30,7 @@ public class PersonController {
 
     @GetMapping("/person")
     public String getPersons(final Model model) {
-        final Flux<Person> persons = this.personRepository.deleteAll()
-                .thenMany(client.get()
-                        .retrieve()
-                        .bodyToFlux(Person.class)
-                        .flatMap(this.personRepository::save));
-                ;
-
-        model.addAttribute("persons", persons);
+        model.addAttribute("persons", this.personService.getAllPersons());
 
         return "persons";
     }
