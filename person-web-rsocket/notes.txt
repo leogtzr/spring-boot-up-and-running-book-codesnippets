@@ -1,0 +1,4 @@
+Este proyecto usa algunos controladores para comunicarse con el proyecto person-rsocket, dicha comunicación se puede
+realizar con el siguiente comando:
+
+http --stream :8080/personstream

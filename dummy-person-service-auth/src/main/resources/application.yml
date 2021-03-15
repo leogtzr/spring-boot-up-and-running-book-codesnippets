@@ -2,7 +2,8 @@ spring:
   security:
     oauth2:
       resourceserver:
-        jwt:
+#        user-info-uri: https://${OKTA_DOMAIN}/oauth2/default/v1/userinfo
+        j wt:
           issuer-uri: https://${OKTA_DOMAIN}/oauth2/default
 
 server:
